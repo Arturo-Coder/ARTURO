@@ -256,74 +256,68 @@
     </div>
 
     <script>
-        // --- CONFIGURACIÓN YOUTUBE (Versión Lyrics - Más compatible con móvil) ---
+        // --- 1. CONFIGURACIÓN YOUTUBE API ---
         var player;
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('youtube-player', {
-                height: '1', 
-                width: '1',
-                videoId: 'wA4wz_G-5zQ', // ID de Banda MS (Versión Letra)
-                playerVars: { 
-                    'autoplay': 0,
+                height: '0',
+                width: '0',
+                videoId: '7UO0O6ADu4Q', // ID del video
+                playerVars: {
+                    'playsinline': 1,
                     'controls': 0,
-                    'rel': 0,
-                    'fs': 0,
-                    'playsinline': 1, // OBLIGATORIO para iPhone
-                    'enablejsapi': 1,
-                    'origin': window.location.origin
-                },
-                events: {
-                    'onReady': onPlayerReady
+                    'start': 40,  // Inicia en 0:40
+                    'end': 1500    // Termina en 2:12 (132 seg)
                 }
             });
         }
 
-        function onPlayerReady(event) {
-            // Bajamos volumen inicial por seguridad, luego lo subimos al clic
-            event.target.setVolume(100); 
-        }
-
-        // Cargar API de YouTube
+        // Cargar script de API de YouTube
         var tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
-        document.body.appendChild(tag);
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-        // --- EFECTOS VISUALES ---
-        const container = document.getElementById('fireflies-container');
-        for(let i=0; i<25; i++) {
+
+        // --- 2. GENERAR LUCIÉRNAGAS ---
+        const firefliesContainer = document.getElementById('fireflies-container');
+        for(let i=0; i<30; i++) {
             const fly = document.createElement('div');
             fly.classList.add('firefly');
             fly.style.left = Math.random() * 100 + 'vw';
             fly.style.top = Math.random() * 100 + 'vh';
             fly.style.animationDuration = (Math.random() * 5 + 5) + 's';
-            container.appendChild(fly);
+            fly.style.animationDelay = (Math.random() * 5) + 's';
+            firefliesContainer.appendChild(fly);
         }
 
+        // --- 3. INTERACCIÓN Y ESCRITURA ---
         const heartBtn = document.getElementById('heartBtn');
         const mainContent = document.getElementById('mainContent');
 
-        // TU CARTA
-        const textoCarta = "Hola si otra vez Arturo ese” loco obsesionado contigo que le falta un tornillo y se siente poeta” jajaja Te escribo esto porque, aunque el tiempo y las circunstancias hayan cambiado, hay fechas que es imposible pasar por alto sin recordar a la persona que ha dejado una huella importante en mi vida. Y tú eres, sin duda, la más importante para mí. A pesar de la distancia o del silencio, quiero que sepas que mis mejores deseos siempre están contigo. \n\nTe admiro por quién eres Hoy no busco complicar las cosas, solo quería que supieras que te recuerdo con un cariño intacto y que, para mí, este día no tendría sentido si no te hiciera llegar un pedacito de todo el amor que te tengo. \n\nTambién te escribo estas palabras con el corazón en la mano y sin filtros. He intentado convencerme de que el tiempo y la distancia serían suficientes para dejar todo atrás, pero la realidad es que cada día que pasa me doy cuenta de que te sigo amando con la misma intensidad, o incluso más que antes. \n\nEstar lejos me ha servido para valorar cada detalle tuyo que antes daba por sentado y para mejorar como persona eh estado yendo con la psicóloga y me ha ayudado a controlar esas emociones toda la presión con la que cargo como te dije no se amar, pero estoy haciendo todo esto para mejorar y que la historia no se repita. \n\nNo te busco solo por la nostalgia de todo lo que paso, sino por la certeza de lo que podemos llegar a ser. \n\nextraño todo de ti. Mi intención no es presionarte, sino ser honesto conmigo mismo y contigo: me encantaría que pudiéramos darnos otra oportunidad de volver a intentarlo de nuevo y, poco a poco, volver a conquistarte volver a enamorarte hacerte ver que puedo ser ese príncipe azul, pero con la madurez de alguien que ya sabe lo que es perder lo más valioso que tenía. Eres la mujer de mi vida, Ximena, y no quiero rendirme sin antes luchar por esto con todas mis fuerzas déjame aprender a tu lado déjame mejorar a tu lado eres mi reina mi princesa y te voy tratar como tal. \n\nCreo que podemos construir algo real, único y especial y me gustaría ver si todavía podemos construir algo juntos. \n\nNada me encantaría más que un futuro a tu lado\n\nEspero que recibas esto como lo que es: un recordatorio de que siempre ocupas un lugar especial en mi mente y en mi corazón.\n\nHoy solo quería recordarte con cariño, desearte lo mejor y decirte que me alegra verte perseguir tus sueños.\n\nEspero que este pequeño detalle te saque una sonrisa.";
+        const textLines = [
+            "Aunque el tiempo pase, hay personas que dejan una huella imborrable, y tú eres una de ellas.",
+            "Hoy solo quería recordarte con cariño, desearte lo mejor y decirte que me alegra verte perseguir tus sueños.",
+            "Espero que este pequeño detalle te saque una sonrisa."
+        ];
 
-        // --- EVENTO CLIC (OPTIMIZADO PARA MÓVIL) ---
         heartBtn.addEventListener('click', function() {
-            // 1. Intentar reproducir audio inmediatamente
-            if(player && typeof player.playVideo === 'function') {
-                player.unMute();
+            // Reproducir la canción
+            if(player && player.playVideo) {
                 player.playVideo();
-                player.setVolume(100);
             }
 
-            // 2. Animación visual
+            // Animación visual
+            this.style.transition = "all 0.5s ease";
+            this.style.transform = "scale(0)";
             this.style.opacity = "0";
+
             createExplosion(window.innerWidth / 2, window.innerHeight / 2);
-            
+
             setTimeout(() => {
                 this.style.display = 'none';
                 mainContent.classList.add('visible');
-                typeWriter(textoCarta, 'cartaCompleta', () => {
-                    document.getElementById('signature').classList.add('visible');
-                });
+                setTimeout(startTypewriter, 1000); 
             }, 600);
         });
 
@@ -334,32 +328,56 @@
                 if (i < text.length) {
                     element.innerHTML += text.charAt(i);
                     i++;
-                    const area = element.closest('.scroll-area');
-                    area.scrollTop = area.scrollHeight;
-                    setTimeout(type, 35);
-                } else if (callback) callback();
+                    setTimeout(type, 50); 
+                } else if (callback) {
+                    callback();
+                }
             }
             type();
         }
 
+        function startTypewriter() {
+            typeWriter(textLines[0], 'line1', () => {
+                setTimeout(() => {
+                    typeWriter(textLines[1], 'line2', () => {
+                        setTimeout(() => {
+                            typeWriter(textLines[2], 'line3', () => {
+                                document.getElementById('signature').classList.add('visible');
+                            });
+                        }, 500);
+                    });
+                }, 500);
+            });
+        }
+
         function createExplosion(x, y) {
-            const elements = ['🌹', '✨', '❤️'];
-            for (let i = 0; i < 40; i++) {
+            const elements = ['🌹', '🌷', '🌼', '❤️', '✨'];
+            for (let i = 0; i < 60; i++) {
                 const el = document.createElement('div');
                 el.classList.add('particle');
                 el.innerText = elements[Math.floor(Math.random() * elements.length)];
-                el.style.left = x + 'px'; el.style.top = y + 'px';
+                el.style.left = x + 'px';
+                el.style.top = y + 'px';
+                el.style.color = '#fff';
+                const size = Math.random() * 20 + 10; 
+                el.style.fontSize = size + 'px';
                 document.body.appendChild(el);
+
                 const angle = Math.random() * Math.PI * 2;
-                const velocity = Math.random() * 200 + 100;
-                el.animate([
+                const velocity = Math.random() * 300 + 100;
+                const destX = Math.cos(angle) * velocity;
+                const destY = Math.sin(angle) * velocity;
+
+                const animation = el.animate([
                     { transform: 'translate(-50%, -50%) scale(0)', opacity: 1 },
-                    { transform: `translate(${Math.cos(angle)*velocity}px, ${Math.sin(angle)*velocity}px) scale(1.5)`, opacity: 0 }
-                ], { duration: 1500 }).onfinish = () => el.remove();
+                    { transform: `translate(${destX}px, ${destY}px) scale(1.5) rotate(${Math.random()*360}deg)`, opacity: 0 }
+                ], {
+                    duration: Math.random() * 1000 + 1000,
+                    easing: 'cubic-bezier(0, .9, .57, 1)'
+                });
+                animation.onfinish = () => el.remove();
             }
         }
     </script>
 </body>
-    </HTML>
-
-
+</html>
