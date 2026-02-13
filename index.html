@@ -256,20 +256,21 @@
     </div>
 
     <script>
-        // --- CONFIGURACIÓN YOUTUBE (Banda MS - El Color de Tus Ojos) ---
+        // --- CONFIGURACIÓN YOUTUBE (Versión Lyrics - Más compatible con móvil) ---
         var player;
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('youtube-player', {
-                height: '0', 
-                width: '0',
-                videoId: '1F58Kv11Y9M', // ID CORRECTO: El Color de Tus Ojos
+                height: '1', 
+                width: '1',
+                videoId: 'wA4wz_G-5zQ', // ID de Banda MS (Versión Letra)
                 playerVars: { 
                     'autoplay': 0,
                     'controls': 0,
                     'rel': 0,
                     'fs': 0,
-                    'playsinline': 1, // Importante para iPhone
-                    'start': 10 // Empieza a los 10 segundos para entrar directo
+                    'playsinline': 1, // OBLIGATORIO para iPhone
+                    'enablejsapi': 1,
+                    'origin': window.location.origin
                 },
                 events: {
                     'onReady': onPlayerReady
@@ -278,8 +279,8 @@
         }
 
         function onPlayerReady(event) {
-            // El video está listo, pero esperamos al clic para reproducir
-            event.target.setVolume(100); // Preparamos volumen al máximo
+            // Bajamos volumen inicial por seguridad, luego lo subimos al clic
+            event.target.setVolume(100); 
         }
 
         // Cargar API de YouTube
@@ -304,16 +305,16 @@
         // TU CARTA
         const textoCarta = "Hola si otra vez Arturo ese” loco obsesionado contigo que le falta un tornillo y se siente poeta” jajaja Te escribo esto porque, aunque el tiempo y las circunstancias hayan cambiado, hay fechas que es imposible pasar por alto sin recordar a la persona que ha dejado una huella importante en mi vida. Y tú eres, sin duda, la más importante para mí. A pesar de la distancia o del silencio, quiero que sepas que mis mejores deseos siempre están contigo. \n\nTe admiro por quién eres Hoy no busco complicar las cosas, solo quería que supieras que te recuerdo con un cariño intacto y que, para mí, este día no tendría sentido si no te hiciera llegar un pedacito de todo el amor que te tengo. \n\nTambién te escribo estas palabras con el corazón en la mano y sin filtros. He intentado convencerme de que el tiempo y la distancia serían suficientes para dejar todo atrás, pero la realidad es que cada día que pasa me doy cuenta de que te sigo amando con la misma intensidad, o incluso más que antes. \n\nEstar lejos me ha servido para valorar cada detalle tuyo que antes daba por sentado y para mejorar como persona eh estado yendo con la psicóloga y me ha ayudado a controlar esas emociones toda la presión con la que cargo como te dije no se amar, pero estoy haciendo todo esto para mejorar y que la historia no se repita. \n\nNo te busco solo por la nostalgia de todo lo que paso, sino por la certeza de lo que podemos llegar a ser. \n\nextraño todo de ti. Mi intención no es presionarte, sino ser honesto conmigo mismo y contigo: me encantaría que pudiéramos darnos otra oportunidad de volver a intentarlo de nuevo y, poco a poco, volver a conquistarte volver a enamorarte hacerte ver que puedo ser ese príncipe azul, pero con la madurez de alguien que ya sabe lo que es perder lo más valioso que tenía. Eres la mujer de mi vida, Ximena, y no quiero rendirme sin antes luchar por esto con todas mis fuerzas déjame aprender a tu lado déjame mejorar a tu lado eres mi reina mi princesa y te voy tratar como tal. \n\nCreo que podemos construir algo real, único y especial y me gustaría ver si todavía podemos construir algo juntos. \n\nNada me encantaría más que un futuro a tu lado\n\nEspero que recibas esto como lo que es: un recordatorio de que siempre ocupas un lugar especial en mi mente y en mi corazón.\n\nHoy solo quería recordarte con cariño, desearte lo mejor y decirte que me alegra verte perseguir tus sueños.\n\nEspero que este pequeño detalle te saque una sonrisa.";
 
-        // --- EVENTO CLIC (AQUÍ ESTÁ LA MAGIA DEL SONIDO) ---
+        // --- EVENTO CLIC (OPTIMIZADO PARA MÓVIL) ---
         heartBtn.addEventListener('click', function() {
-            // 1. Forzamos el sonido al hacer clic
+            // 1. Intentar reproducir audio inmediatamente
             if(player && typeof player.playVideo === 'function') {
-                player.unMute();     // Quitar silencio
-                player.setVolume(100); // Volumen al máximo
-                player.playVideo();  // Reproducir
+                player.unMute();
+                player.playVideo();
+                player.setVolume(100);
             }
 
-            // 2. Efectos visuales
+            // 2. Animación visual
             this.style.opacity = "0";
             createExplosion(window.innerWidth / 2, window.innerHeight / 2);
             
@@ -359,3 +360,4 @@
         }
     </script>
     </HTML>
+
