@@ -10,7 +10,7 @@
             --bg-gradient: radial-gradient(circle at center, #2b1016 0%, #1a0508 100%);
             --heart-color: #ff4d6d;
             --accent-color: #ffb3c1;
-            --highlight-color: #ff85a1; /* Rosa intenso para títulos y firma */
+            --highlight-color: #ff85a1; /* Rosa intenso */
             --special-highlight: #fff0f3;
         }
 
@@ -249,75 +249,65 @@
                     Esto que siento no se puede comparar"</span><br><br>
                     Y si ves que me sonrojo<br>
                     Si te burlas, no me enojo<br>
-                    <span class="super-resaltado">"Yo solo sé que de ti me enamoré. ARTURO"</span>
+                    <span class="super-resaltado">"Yo solo sé que de ti me enamoré"</span>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // --- 1. CONFIGURACIÓN YOUTUBE API ---
+        // CONFIGURACIÓN QUE TE FUNCIONÓ (ID: SATURNO - 7UO0O6ADu4Q)
         var player;
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('youtube-player', {
-                height: '0',
+                height: '0', 
                 width: '0',
-                videoId: '7UO0O6ADu4Q', // ID del video
-                playerVars: {
+                videoId: '7UO0O6ADu4Q', // El video que sí te funcionó
+                playerVars: { 
                     'playsinline': 1,
                     'controls': 0,
-                    'start': 40,  // Inicia en 0:40
-                    'end': 1500    // Termina en 2:12 (132 seg)
+                    'start': 40, 
+                    'end': 132 
                 }
             });
         }
 
-        // Cargar script de API de YouTube
         var tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
-        var firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        document.body.appendChild(tag);
 
-
-        // --- 2. GENERAR LUCIÉRNAGAS ---
-        const firefliesContainer = document.getElementById('fireflies-container');
-        for(let i=0; i<30; i++) {
+        const container = document.getElementById('fireflies-container');
+        for(let i=0; i<25; i++) {
             const fly = document.createElement('div');
             fly.classList.add('firefly');
             fly.style.left = Math.random() * 100 + 'vw';
             fly.style.top = Math.random() * 100 + 'vh';
             fly.style.animationDuration = (Math.random() * 5 + 5) + 's';
-            fly.style.animationDelay = (Math.random() * 5) + 's';
-            firefliesContainer.appendChild(fly);
+            container.appendChild(fly);
         }
 
-        // --- 3. INTERACCIÓN Y ESCRITURA ---
         const heartBtn = document.getElementById('heartBtn');
         const mainContent = document.getElementById('mainContent');
 
-        const textLines = [
-            "Aunque el tiempo pase, hay personas que dejan una huella imborrable, y tú eres una de ellas.",
-            "Hoy solo quería recordarte con cariño, desearte lo mejor y decirte que me alegra verte perseguir tus sueños.",
-            "Espero que este pequeño detalle te saque una sonrisa."
-        ];
+        // TU CARTA LARGA Y COMPLETA
+        const textoCarta = "Hola si otra vez Arturo ese” loco obsesionado contigo que le falta un tornillo y se siente poeta” jajaja Te escribo esto porque, aunque el tiempo y las circunstancias hayan cambiado, hay fechas que es imposible pasar por alto sin recordar a la persona que ha dejado una huella importante en mi vida. Y tú eres, sin duda, la más importante para mí. A pesar de la distancia o del silencio, quiero que sepas que mis mejores deseos siempre están contigo. \n\nTe admiro por quién eres Hoy no busco complicar las cosas, solo quería que supieras que te recuerdo con un cariño intacto y que, para mí, este día no tendría sentido si no te hiciera llegar un pedacito de todo el amor que te tengo. \n\nTambién te escribo estas palabras con el corazón en la mano y sin filtros. He intentado convencerme de que el tiempo y la distancia serían suficientes para dejar todo atrás, pero la realidad es que cada día que pasa me doy cuenta de que te sigo amando con la misma intensidad, o incluso más que antes. \n\nEstar lejos me ha servido para valorar cada detalle tuyo que antes daba por sentado y para mejorar como persona eh estado yendo con la psicóloga y me ha ayudado a controlar esas emociones toda la presión con la que cargo como te dije no se amar, pero estoy haciendo todo esto para mejorar y que la historia no se repita. \n\nNo te busco solo por la nostalgia de todo lo que paso, sino por la certeza de lo que podemos llegar a ser. \n\nextraño todo de ti. Mi intención no es presionarte, sino ser honesto conmigo mismo y contigo: me encantaría que pudiéramos darnos otra oportunidad de volver a intentarlo de nuevo y, poco a poco, volver a conquistarte volver a enamorarte hacerte ver que puedo ser ese príncipe azul, pero con la madurez de alguien que ya sabe lo que es perder lo más valioso que tenía. Eres la mujer de mi vida, Ximena, y no quiero rendirme sin antes luchar por esto con todas mis fuerzas déjame aprender a tu lado déjame mejorar a tu lado eres mi reina mi princesa y te voy tratar como tal. \n\nCreo que podemos construir algo real, único y especial y me gustaría ver si todavía podemos construir algo juntos. \n\nNada me encantaría más que un futuro a tu lado\n\nEspero que recibas esto como lo que es: un recordatorio de que siempre ocupas un lugar especial en mi mente y en mi corazón.\n\nHoy solo quería recordarte con cariño, desearte lo mejor y decirte que me alegra verte perseguir tus sueños.\n\nEspero que este pequeño detalle te saque una sonrisa.";
 
         heartBtn.addEventListener('click', function() {
-            // Reproducir la canción
+            // REPRODUCCIÓN (Lógica que te funcionó)
             if(player && player.playVideo) {
                 player.playVideo();
             }
 
-            // Animación visual
-            this.style.transition = "all 0.5s ease";
-            this.style.transform = "scale(0)";
             this.style.opacity = "0";
-
             createExplosion(window.innerWidth / 2, window.innerHeight / 2);
-
+            
             setTimeout(() => {
                 this.style.display = 'none';
                 mainContent.classList.add('visible');
-                setTimeout(startTypewriter, 1000); 
+                // AQUÍ ESTÁ EL ARREGLO: Usamos la función para texto largo
+                typeWriter(textoCarta, 'cartaCompleta', () => {
+                    document.getElementById('signature').classList.add('visible');
+                });
             }, 600);
         });
 
@@ -328,54 +318,28 @@
                 if (i < text.length) {
                     element.innerHTML += text.charAt(i);
                     i++;
-                    setTimeout(type, 50); 
-                } else if (callback) {
-                    callback();
-                }
+                    const area = element.closest('.scroll-area');
+                    area.scrollTop = area.scrollHeight;
+                    setTimeout(type, 35);
+                } else if (callback) callback();
             }
             type();
         }
 
-        function startTypewriter() {
-            typeWriter(textLines[0], 'line1', () => {
-                setTimeout(() => {
-                    typeWriter(textLines[1], 'line2', () => {
-                        setTimeout(() => {
-                            typeWriter(textLines[2], 'line3', () => {
-                                document.getElementById('signature').classList.add('visible');
-                            });
-                        }, 500);
-                    });
-                }, 500);
-            });
-        }
-
         function createExplosion(x, y) {
-            const elements = ['🌹', '🌷', '🌼', '❤️', '✨'];
-            for (let i = 0; i < 60; i++) {
+            const elements = ['🌹', '✨', '❤️'];
+            for (let i = 0; i < 40; i++) {
                 const el = document.createElement('div');
                 el.classList.add('particle');
                 el.innerText = elements[Math.floor(Math.random() * elements.length)];
-                el.style.left = x + 'px';
-                el.style.top = y + 'px';
-                el.style.color = '#fff';
-                const size = Math.random() * 20 + 10; 
-                el.style.fontSize = size + 'px';
+                el.style.left = x + 'px'; el.style.top = y + 'px';
                 document.body.appendChild(el);
-
                 const angle = Math.random() * Math.PI * 2;
-                const velocity = Math.random() * 300 + 100;
-                const destX = Math.cos(angle) * velocity;
-                const destY = Math.sin(angle) * velocity;
-
-                const animation = el.animate([
+                const velocity = Math.random() * 200 + 100;
+                el.animate([
                     { transform: 'translate(-50%, -50%) scale(0)', opacity: 1 },
-                    { transform: `translate(${destX}px, ${destY}px) scale(1.5) rotate(${Math.random()*360}deg)`, opacity: 0 }
-                ], {
-                    duration: Math.random() * 1000 + 1000,
-                    easing: 'cubic-bezier(0, .9, .57, 1)'
-                });
-                animation.onfinish = () => el.remove();
+                    { transform: `translate(${Math.cos(angle)*velocity}px, ${Math.sin(angle)*velocity}px) scale(1.5)`, opacity: 0 }
+                ], { duration: 1500 }).onfinish = () => el.remove();
             }
         }
     </script>
