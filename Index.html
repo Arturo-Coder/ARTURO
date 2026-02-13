@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Ximena</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-gradient: radial-gradient(circle at center, #2b1016 0%, #1a0508 100%);
+            --heart-color: #ff4d6d;
+            --accent-color: #ffb3c1;
+            --highlight-color: #ff85a1; /* Rosa intenso para títulos y firma */
+            --special-highlight: #fff0f3;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: var(--bg-gradient);
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            color: white;
+            position: relative;
+        }
+
+        .firefly {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background-color: #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #fff, 0 0 20px #ff0055;
+            animation: fly 10s linear infinite;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes fly {
+            0% { transform: translate(0, 0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translate(100px, -500px); opacity: 0; }
+        }
+
+        .heart-container {
+            position: relative;
+            cursor: pointer;
+            z-index: 20;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .heart {
+            font-size: 100px;
+            color: var(--heart-color);
+            animation: beat 1.5s infinite ease-in-out;
+            filter: drop-shadow(0 0 20px rgba(255, 77, 109, 0.8));
+        }
+
+        @keyframes beat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+
+        .content-wrapper {
+            display: none;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 30px;
+            width: 95%;
+            max-width: 1100px;
+            z-index: 10;
+            padding: 40px 20px;
+        }
+
+        .content-wrapper.visible {
+            display: flex;
+            animation: fadeIn 1.5s forwards;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .bouquet {
+            position: absolute;
+            bottom: 0px;
+            font-size: 5rem;
+            opacity: 0;
+            transition: all 1.5s ease 0.5s;
+            filter: drop-shadow(0 0 15px rgba(255,255,255,0.2));
+            z-index: 5;
+            pointer-events: none;
+        }
+        
+        .bouquet.left { left: -20px; transform: translateX(-50px); }
+        .bouquet.right { right: -20px; transform: translateX(50px); }
+
+        .content-wrapper.visible .bouquet {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            flex: 1;
+            min-width: 320px;
+            max-width: 500px;
+            height: 550px;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1, h3 {
+            font-family: 'Great Vibes', cursive;
+            color: var(--highlight-color);
+            text-shadow: 0 0 10px rgba(255,77,109,0.5);
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        h1 { font-size: 3rem; }
+        h3 { font-size: 2.2rem; }
+
+        .scroll-area {
+            overflow-y: auto;
+            flex-grow: 1;
+            padding-right: 10px;
+            overflow-wrap: break-word; 
+            word-wrap: break-word;
+        }
+
+        .scroll-area::-webkit-scrollbar { width: 5px; }
+        .scroll-area::-webkit-scrollbar-thumb { background: var(--highlight-color); border-radius: 10px; }
+
+        .typewriter-text {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #eee;
+            white-space: pre-wrap; 
+        }
+
+        .lyrics-content {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #eee;
+            text-align: center;
+            white-space: normal;
+        }
+
+        .resaltado {
+            color: var(--highlight-color);
+            font-weight: 600;
+            font-style: italic;
+            text-shadow: 0 0 5px rgba(255, 133, 161, 0.3);
+        }
+
+        .super-resaltado {
+            display: block;
+            margin-top: 20px;
+            font-family: 'Great Vibes', cursive;
+            font-size: 1.8rem;
+            color: var(--special-highlight);
+            text-shadow: 0 0 15px #ff4d6d, 0 0 25px #ff4d6d;
+            text-align: center;
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            from { transform: scale(1); }
+            to { transform: scale(1.05); }
+        }
+
+        .signature {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.2rem;
+            color: var(--highlight-color);
+            display: block;
+            text-align: right;
+            margin-top: 15px;
+            opacity: 0;
+            transition: opacity 1s;
+        }
+
+        .signature.visible { opacity: 1; }
+        .particle { position: absolute; pointer-events: none; z-index: 100; }
+        #youtube-player { position: absolute; width: 1px; height: 1px; opacity: 0; }
+
+        @media (max-width: 850px) {
+            .content-wrapper { flex-direction: column; align-items: center; padding-bottom: 80px; }
+            .glass-card { width: 90%; height: 500px; }
+            .bouquet { font-size: 4rem; bottom: 10px; }
+            .bouquet.left { left: 10px; }
+            .bouquet.right { right: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="youtube-player"></div>
+    <div id="fireflies-container"></div>
+
+    <div class="heart-container" id="heartBtn">
+        <div class="heart">❤️</div>
+        <div style="font-family: 'Great Vibes', cursive; font-size: 2.2rem;">Para Ximena</div>
+        <div style="font-size: 0.8rem; opacity: 0.7; margin-top: 10px;">(Toca el corazón)</div>
+    </div>
+
+    <div class="content-wrapper" id="mainContent">
+        <div class="bouquet left">🌹🌷✨</div>
+        <div class="bouquet right">✨🌻🌹</div>
+
+        <div class="glass-card">
+            <h1>Querida Ximena</h1>
+            <div class="scroll-area">
+                <div id="cartaCompleta" class="typewriter-text"></div>
+            </div>
+            <span class="signature" id="signature">Arturo</span>
+        </div>
+
+        <div class="glass-card">
+            <h3>De Arturo para vos</h3>
+            <div class="scroll-area">
+                <div class="lyrics-content">
+                    Quizás me animo y te pido verte el sábado a las diez<br><br>
+                    El color de tus ojos<br>
+                    Se robó mi atención<br>
+                    <span class="resaltado">"Te vas metiendo dentro de mi corazón"</span><br><br>
+                    <span class="resaltado">"Perfecta en cualquier sentido"</span><br>
+                    <span class="resaltado">"Con pantalón o vestido robas mi respiración"</span><br><br>
+                    Qué más quisiera que fueras el sueño que se vuelve realidad<br>
+                    <span class="resaltado">"Me gustas tanto y eso es toda la verdad"</span><br><br>
+                    Me siento emocionado<br>
+                    No sé si te ha pasado<br>
+                    <span class="resaltado">"Que si pudiera te viera de lunes a domingo sin parar<br>
+                    Esto que siento no se puede comparar"</span><br><br>
+                    Y si ves que me sonrojo<br>
+                    Si te burlas, no me enojo<br>
+                    <span class="super-resaltado">"Yo solo sé que de ti me enamoré. ARTURO"</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('youtube-player', {
+                height: '0', width: '0',
+                videoId: '7UO0O6ADu4Q',
+                playerVars: { 'start': 40, 'end': 205 } /* FINALIZA EN 3:25 (205 SEGUNDOS) */
+            });
+        }
+
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        document.body.appendChild(tag);
+
+        const container = document.getElementById('fireflies-container');
+        for(let i=0; i<25; i++) {
+            const fly = document.createElement('div');
+            fly.classList.add('firefly');
+            fly.style.left = Math.random() * 100 + 'vw';
+            fly.style.top = Math.random() * 100 + 'vh';
+            fly.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            container.appendChild(fly);
+        }
+
+        const heartBtn = document.getElementById('heartBtn');
+        const mainContent = document.getElementById('mainContent');
+
+        const textoCarta = "Hola si otra vez Arturo ese” loco obsesionado contigo que le falta un tornillo y se siente poeta” jajaja Te escribo esto porque, aunque el tiempo y las circunstancias hayan cambiado, hay fechas que es imposible pasar por alto sin recordar a la persona que ha dejado una huella importante en mi vida. Y tú eres, sin duda, la más importante para mí. A pesar de la distancia o del silencio, quiero que sepas que mis mejores deseos siempre están contigo. \n\nTe admiro por quién eres Hoy no busco complicar las cosas, solo quería que supieras que te recuerdo con un cariño intacto y que, para mí, este día no tendría sentido si no te hiciera llegar un pedacito de todo el amor que te tengo. \n\nTambién te escribo estas palabras con el corazón en la mano y sin filtros. He intentado convencerme de que el tiempo y la distancia serían suficientes para dejar todo atrás, pero la realidad es que cada día que pasa me doy cuenta de que te sigo amando con la misma intensidad, o incluso más que antes. \n\nEstar lejos me ha servido para valorar cada detalle tuyo que antes daba por sentado y para mejorar como persona eh estado yendo con la psicóloga y me ha ayudado a controlar esas emociones toda la presión con la que cargo como te dije no se amar, pero estoy haciendo todo esto para mejorar y que la historia no se repita. \n\nNo te busco solo por la nostalgia de todo lo que paso, sino por la certeza de lo que podemos llegar a ser. \n\nextraño todo de ti. Mi intención no es presionarte, sino ser honesto conmigo mismo y contigo: me encantaría que pudiéramos darnos otra oportunidad de volver a intentarlo de nuevo y, poco a poco, volver a conquistarte volver a enamorarte hacerte ver que puedo ser ese príncipe azul, pero con la madurez de alguien que ya sabe lo que es perder lo más valioso que tenía. Eres la mujer de mi vida, Ximena, y no quiero rendirme sin antes luchar por esto con todas mis fuerzas déjame aprender a tu lado déjame mejorar a tu lado eres mi reina mi princesa y te voy tratar como tal. \n\nCreo que podemos construir algo real, único y especial y me gustaría ver si todavía podemos construir algo juntos. \n\nNada me encantaría más que un futuro a tu lado\n\nEspero que recibas esto como lo que es: un recordatorio de que siempre ocupas un lugar especial en mi mente y en mi corazón.  \n\nDE TU LOCO ENAMORADO ARTURO";
+
+        heartBtn.addEventListener('click', function() {
+            if(player && player.playVideo) player.playVideo();
+            this.style.opacity = "0";
+            createExplosion(window.innerWidth / 2, window.innerHeight / 2);
+            
+            setTimeout(() => {
+                this.style.display = 'none';
+                mainContent.classList.add('visible');
+                typeWriter(textoCarta, 'cartaCompleta', () => {
+                    document.getElementById('signature').classList.add('visible');
+                });
+            }, 600);
+        });
+
+        function typeWriter(text, elementId, callback) {
+            const element = document.getElementById(elementId);
+            let i = 0;
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    const area = element.closest('.scroll-area');
+                    area.scrollTop = area.scrollHeight;
+                    setTimeout(type, 35);
+                } else if (callback) callback();
+            }
+            type();
+        }
+
+        function createExplosion(x, y) {
+            const elements = ['🌹', '✨', '❤️'];
+            for (let i = 0; i < 40; i++) {
+                const el = document.createElement('div');
+                el.classList.add('particle');
+                el.innerText = elements[Math.floor(Math.random() * elements.length)];
+                el.style.left = x + 'px'; el.style.top = y + 'px';
+                document.body.appendChild(el);
+                const angle = Math.random() * Math.PI * 2;
+                const velocity = Math.random() * 200 + 100;
+                el.animate([
+                    { transform: 'translate(-50%, -50%) scale(0)', opacity: 1 },
+                    { transform: `translate(${Math.cos(angle)*velocity}px, ${Math.sin(angle)*velocity}px) scale(1.5)`, opacity: 0 }
+                ], { duration: 1500 }).onfinish = () => el.remove();
+            }
+        }
+    </script>
+</body>
+</html>
